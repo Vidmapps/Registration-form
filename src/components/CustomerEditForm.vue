@@ -1,12 +1,12 @@
 <template>
   <div>
-    
+    Edt
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'CustomerEditForm',
   
 }
 </script>
