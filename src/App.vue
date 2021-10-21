@@ -3,11 +3,9 @@
     <section id="app">
       <h1 class="text-center">Customers registration</h1>
       <div class="d-flex justify-content-around p-4">
-        <customer-add-form v-if="!showEditForm" @addCustomer="addCustomer" />
+        <customer-add-form v-if="!showEditForm" />
         <customer-edit-form
           v-if="showEditForm"
-          @updatedCustomer="updatedCustomer"
-          :updateCustomer="updateCustomer[0]"
         />
       </div>
       <div v-if="showCustomersList">
@@ -28,11 +26,9 @@
             </thead>
             <tbody>
               <customer-data
-                v-for="customer in customers"
+                v-for="customer in allCustomers"
                 :key="customer.id"
                 :customer="customer"
-                @edit-customer="editCustomer"
-                @delete-customer="deleteCustomer"
               />
             </tbody>
           </table>
@@ -43,15 +39,10 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      showEditForm: false,
-      customers:
-        localStorage.getItem("customers") !== "undefined" &&
-        localStorage.getItem("customers") !== null
-          ? JSON.parse(localStorage.getItem("customers"))
-          : [],
       updateCustomer: [
         {
           id: "",
@@ -68,37 +59,7 @@ export default {
     };
   },
   methods: {
-    addCustomer(newCustomer) {
-      const newCustomerData = {
-        id: new Date().toISOString(),
-        name: newCustomer.name,
-        email: newCustomer.email,
-        address: {
-          city: newCustomer.address.city,
-          street: newCustomer.address.street,
-          houseNumber: newCustomer.address.houseNumber,
-          zipCode: newCustomer.address.zipCode,
-        },
-      };
-      this.customers.push(newCustomerData);
-      localStorage.setItem("customers", JSON.stringify(this.customers));
-    },
-    editCustomer(editedCustomer) {
-      this.updateCustomer[0].id = editedCustomer.id;
-      this.updateCustomer[0].name = editedCustomer.name;
-      this.updateCustomer[0].email = editedCustomer.email;
-      this.updateCustomer[0].address.city = editedCustomer.address.city;
-      this.updateCustomer[0].address.street = editedCustomer.address.street;
-      this.updateCustomer[0].address.houseNumber =
-        editedCustomer.address.houseNumber;
-      this.updateCustomer[0].address.zipCode = editedCustomer.address.zipCode;
-      this.showEditForm = true;
-    },
-    deleteCustomer(customerId) {
-      this.customers = this.customers.filter(
-        (customer) => customer.id !== customerId
-      );
-    },
+    ...mapActions(["fetchCustomers", "deleteCustomers"]),
     updatedCustomer(updatedCustomer) {
       this.$set(
         this,
@@ -115,12 +76,25 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["allCustomers", "thisCustomer"]),
     showCustomersList() {
-      if (Array.isArray(this.customers)) {
-        return this.customers.length > 0;
+            console.log(this.allCustomers)
+      if (this.allCustomers) {
+        return this.allCustomers.length > 0;
       }
       return false;
     },
+    showEditForm() {
+      if (this.thisCustomer.id) {
+        return true
+      }
+      return false;
+    },
+  },
+  created() {
+    if (this.allCustomers !== undefined) {
+      this.fetchCustomers();
+    }
   },
 };
 </script>

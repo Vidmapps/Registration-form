@@ -1,5 +1,6 @@
 import Vue from "vue";
 import App from "./App.vue";
+import store from './store';
 import CustomerAddForm from "@/components/CustomerAddForm";
 import CustomerData from "@/components/CustomerData";
 import CustomerEditForm from "@/components/CustomerEditForm";
@@ -14,5 +15,6 @@ Vue.component("customer-edit-form", CustomerEditForm);
 Vue.config.productionTip = false;
 
 new Vue({
+  store,
   render: (h) => h(App),
 }).$mount("#app");

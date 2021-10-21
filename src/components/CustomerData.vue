@@ -14,97 +14,95 @@
         <div>{{ longitude }}</div>
       </div>
     </td>
-    <td class="td-btn table-padding" >
-      <button class="btn-success btn-style" @click="onLocatorButtonPressed">Load location</button>
-      <button class="btn-warning btn-style" @click="onEdit">Edit customer</button>
-      <button class="btn-danger btn-style" @click="onDelete">Delete customer</button>
+    <td class="td-btn table-padding">
+      <button class="btn-success btn-style" @click="onLocatorButtonPressed">
+        Load location
+      </button>
+      <button class="btn-warning btn-style" @click="onEdit(customer)">
+        Edit customer
+      </button>
+      <button class="btn-danger btn-style" @click="onDelete(customer.id)">
+        Delete customer
+      </button>
     </td>
   </tr>
 </template>
 
 <script>
 function makeRequest(method, url) {
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open(method, url);
-    xhr.onload = function () {
+    xhr.onload = function() {
       if (this.status >= 200 && this.status < 300) {
         resolve(JSON.parse(xhr.response));
       } else {
         reject({
           status: this.status,
-          statusText: xhr.statusText
+          statusText: xhr.statusText,
         });
       }
     };
-    xhr.onerror = function () {
+    xhr.onerror = function() {
       reject({
         status: this.status,
-        statusText: xhr.statusText
+        statusText: xhr.statusText,
       });
     };
     xhr.send();
   });
 }
-
+import { mapActions } from "vuex";
 export default {
-  emits: ['edit-customer', 'delete-customer'],
-  props: ['customer'],
+  props: ["customer"],
   data() {
     return {
       isLoading: false,
-      latitude: '',
-      longitude: ''
-    }
+      latitude: "",
+      longitude: "",
+    };
   },
   computed: {
     showLoading() {
-      return this.isLoading && (this.latitude === '' || this.longitude === '');
-    }
+      return this.isLoading && (this.latitude === "" || this.longitude === "");
+    },
   },
   methods: {
-    onEdit() {
-      this.$emit('edit-customer',
-          this.customer,
-      )
-    },
+    ...mapActions(["onDelete", "onEdit"]),
     async onLocatorButtonPressed() {
       try {
         this.isLoading = true;
-        const geoLink = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+        const geoLink =
+          "https://maps.googleapis.com/maps/api/geocode/json?address=";
         const keyAPI = process.env.VUE_APP_SECRET_API_KEY;
         const populateHeader = (obj) => {
           let latitude = obj.results[0].geometry.location.lat;
           let longitude = obj.results[0].geometry.location.lng;
           this.latitude = "latitude: " + latitude;
           this.longitude = "longitude: " + longitude;
-        }
-        let plusCity = this.customer.address.city.replaceAll(' ', '+');
-        let plusStreet = this.customer.address.street.replaceAll(' ', '+');
-        let plusHouseNumber = this.customer.address.houseNumber.replaceAll(' ', '+');
+        };
+        let plusCity = this.customer.address.city.replaceAll(" ", "+");
+        let plusStreet = this.customer.address.street.replaceAll(" ", "+");
+        let plusHouseNumber = this.customer.address.houseNumber.replaceAll(
+          " ",
+          "+"
+        );
         let requestURL = `${geoLink}${plusHouseNumber}+${plusStreet}+${plusCity}+&key=${keyAPI}`;
 
-        const response = await makeRequest('GET', requestURL);
+        const response = await makeRequest("GET", requestURL);
         populateHeader(response);
       } catch (error) {
-        alert('Error is ' + error);
+        alert("Error is " + error);
       } finally {
         this.isLoading = false;
       }
-
-
     },
-    onDelete() {
-      this.$emit('delete-customer',
-       this.customer.id,
-      )
-    }
   },
-}
+};
 </script>
 
 <style scoped>
-  .td-btn {
-    display: grid;
-  }
+.td-btn {
+  display: grid;
+}
 </style>

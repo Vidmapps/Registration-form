@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form-style" @submit.prevent="submitData">
+    <form class="form-style" @submit="onSubmitData(newCustomer)">
       <div class="form-group">
         <label for="name">Full name</label>
         <input
@@ -71,8 +71,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
-  emits: ["add-customer"],
   data() {
     return {
       newCustomer: {
@@ -88,15 +88,7 @@ export default {
     };
   },
   methods: {
-    submitData() {
-      this.$emit("addCustomer", this.newCustomer);
-      this.newCustomer.name = "";
-      this.newCustomer.email = "";
-      this.newCustomer.address.city = "";
-      this.newCustomer.address.street = "";
-      this.newCustomer.address.houseNumber = "";
-      this.newCustomer.address.zipCode = "";
-    },
+    ...mapActions(["onSubmitData"]),
   },
 };
 </script>
