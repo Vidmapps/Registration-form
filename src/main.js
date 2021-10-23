@@ -4,6 +4,7 @@ import store from './store';
 import CustomerAddForm from "@/components/CustomerAddForm";
 import CustomerData from "@/components/CustomerData";
 import CustomerEditForm from "@/components/CustomerEditForm";
+import CustomersList from "@/components/CustomersList";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
@@ -11,6 +12,7 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 Vue.component("customer-add-form", CustomerAddForm);
 Vue.component("customer-data", CustomerData);
 Vue.component("customer-edit-form", CustomerEditForm);
+Vue.component("customers-list", CustomersList);
 
 Vue.config.productionTip = false;
 

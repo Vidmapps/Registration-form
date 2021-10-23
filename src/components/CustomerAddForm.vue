@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form-style" @submit="onSubmitData(newCustomer)">
+    <form class="form-style">
       <div class="form-group">
         <label for="name">Full name</label>
         <input
@@ -64,7 +64,7 @@
         />
       </div>
       <div class="text-center">
-        <button class="btn-success btn-style">Add Customer</button>
+        <button class="btn-success btn-style" @click="onSubmitData(newCustomer)">Add Customer</button>
       </div>
     </form>
   </div>

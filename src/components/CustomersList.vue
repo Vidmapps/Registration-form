@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <customer-data
-            v-for="customer in customers"
+            v-for="customer in allCustomers"
             :key="customer.id"
             :customer="customer"
           />
@@ -28,8 +28,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-  
+  methods: {
+    ...mapActions(["deleteCustomers"]),
+  },
+  computed: {
+    ...mapGetters(["allCustomers", "thisCustomer"]),
+  },
 };
 </script>
 
