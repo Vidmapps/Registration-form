@@ -64,7 +64,10 @@
         />
       </div>
       <div class="text-center">
-        <button class="btn-success btn-style" @click="onUpdatedCustomer(thisCustomer)">
+        <button
+          class="btn-success btn-style"
+          @click="onUpdatedCustomer(thisCustomer)"
+        >
           Update Customer
         </button>
       </div>
@@ -88,6 +91,6 @@ export default {
   },
   computed: {
     ...mapGetters(["thisCustomer"]),
-  }
+  },
 };
 </script>

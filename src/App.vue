@@ -15,7 +15,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-   methods: {
+  methods: {
     ...mapActions(["fetchCustomers"]),
   },
   computed: {

@@ -64,7 +64,12 @@
         />
       </div>
       <div class="text-center">
-        <button class="btn-success btn-style" @click="onSubmitData(newCustomer)">Add Customer</button>
+        <button
+          class="btn-success btn-style"
+          @click="onSubmitData(newCustomer)"
+        >
+          Add Customer
+        </button>
       </div>
     </form>
   </div>
