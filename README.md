@@ -1,21 +1,8 @@
-# registration-form
+# Registration form
 
-## Project setup
-```
-npm install
-```
+![image](https://user-images.githubusercontent.com/58663418/174719419-c554ed43-7935-4cfc-b648-8bb1615fe148.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Applications usage
+## About The Project
 
 Add the details of the customers to the `Customers registration form` to show their details in the `Customers list`, see their coordinates based on the address and edit them anytime.
 - Click `Add Customer` to add the customer to the registration form;
@@ -25,5 +12,13 @@ Add the details of the customers to the `Customers registration form` to show th
 - Click `Delete Customer` to delete the customer.
 - Click `Cancel edit` to cancel the changes.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Installation
+
+* npm install
+* npm run serve
+
+### Built With
+
+* Vue.js v2.6.11
+* Vuex v3.6.2"
+* Bootstrap v5.1.2"
